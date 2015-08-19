@@ -1,0 +1,154 @@
+/*
+
+Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
+
+*/
+
+.sidecode .hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #23241f;
+  -webkit-text-size-adjust: none;
+}
+
+.sidecode .hljs,
+.sidecode .hljs-tag,
+.sidecode .css .hljs-rule,
+.sidecode .css .hljs-value,
+.sidecode .aspectj .hljs-function,
+.sidecode .css .hljs-function
+.sidecode .hljs-preprocessor,
+.sidecode .hljs-pragma {
+  color: #f8f8f2;
+}
+
+.sidecode .hljs-strongemphasis,
+.sidecode .hljs-strong,
+.sidecode .hljs-emphasis {
+  color: #a8a8a2;
+}
+
+.sidecode .hljs-bullet,
+.sidecode .hljs-blockquote,
+.sidecode .hljs-horizontal_rule,
+.sidecode .hljs-number,
+.sidecode .hljs-regexp,
+.sidecode .alias .hljs-keyword,
+.sidecode .hljs-literal,
+.sidecode .hljs-hexcolor {
+  color: #ae81ff;
+}
+
+.sidecode .hljs-tag .hljs-value,
+.sidecode .hljs-code,
+.sidecode .hljs-title,
+.sidecode .css .hljs-class,
+.sidecode .hljs-class .hljs-title:last-child {
+  color: #a6e22e;
+}
+
+.sidecode .hljs-link_url {
+  font-size: 80%;
+}
+
+.sidecode .hljs-strong,
+.sidecode .hljs-strongemphasis {
+  font-weight: bold;
+}
+
+.sidecode .hljs-emphasis,
+.sidecode .hljs-strongemphasis,
+.sidecode .hljs-class .hljs-title:last-child,
+.sidecode .hljs-typename {
+  font-style: italic;
+}
+
+.sidecode .hljs-keyword,
+.sidecode .ruby .hljs-class .hljs-keyword:first-child,
+.sidecode .ruby .hljs-function .hljs-keyword,
+.sidecode .hljs-function,
+.sidecode .hljs-change,
+.sidecode .hljs-winutils,
+.sidecode .hljs-flow,
+.sidecode .nginx .hljs-title,
+.sidecode .tex .hljs-special,
+.sidecode .hljs-header,
+.sidecode .hljs-attribute,
+.sidecode .hljs-symbol,
+.sidecode .hljs-symbol .hljs-string,
+.sidecode .hljs-tag .hljs-title,
+.sidecode .hljs-value,
+.sidecode .alias .hljs-keyword:first-child,
+.sidecode .css .hljs-tag,
+.sidecode .css .unit,
+.sidecode .css .hljs-important {
+  color: #f92672;
+}
+
+.sidecode .hljs-function .hljs-keyword,
+.sidecode .hljs-class .hljs-keyword:first-child,
+.sidecode .hljs-aspect .hljs-keyword:first-child,
+.sidecode .hljs-constant,
+.sidecode .hljs-typename,
+.sidecode .hljs-name,
+.sidecode .css .hljs-attribute {
+  color: #66d9ef;
+}
+
+.sidecode .hljs-variable,
+.sidecode .hljs-params,
+.sidecode .hljs-class .hljs-title,
+.sidecode .hljs-aspect .hljs-title {
+  color: #f8f8f2;
+}
+
+.sidecode .hljs-string,
+.sidecode .css .hljs-id,
+.sidecode .hljs-subst,
+.sidecode .hljs-type,
+.sidecode .ruby .hljs-class .hljs-parent,
+.sidecode .hljs-built_in,
+.sidecode .django .hljs-template_tag,
+.sidecode .django .hljs-variable,
+.sidecode .smalltalk .hljs-class,
+.sidecode .django .hljs-filter .hljs-argument,
+.sidecode .smalltalk .hljs-localvars,
+.sidecode .smalltalk .hljs-array,
+.sidecode .hljs-attr_selector,
+.sidecode .hljs-pseudo,
+.sidecode .hljs-addition,
+.sidecode .hljs-stream,
+.sidecode .hljs-envvar,
+.sidecode .apache .hljs-tag,
+.sidecode .apache .hljs-cbracket,
+.sidecode .tex .hljs-command,
+.sidecode .hljs-prompt,
+.sidecode .hljs-link_label,
+.sidecode .hljs-link_url {
+  color: #e6db74;
+}
+
+.sidecode .hljs-comment,
+.sidecode .hljs-annotation,
+.sidecode .hljs-decorator,
+.sidecode .hljs-pi,
+.sidecode .hljs-doctype,
+.sidecode .hljs-deletion,
+.sidecode .hljs-shebang,
+.sidecode .apache .hljs-sqbracket,
+.sidecode .tex .hljs-formula {
+  color: #75715e;
+}
+
+.sidecode .coffeescript .javascript,
+.sidecode .javascript .xml,
+.sidecode .tex .hljs-formula,
+.sidecode .xml .javascript,
+.sidecode .xml .vbscript,
+.sidecode .xml .css,
+.sidecode .xml .hljs-cdata,
+.sidecode .xml .php,
+.sidecode .php .xml {
+  opacity: 0.5;
+}

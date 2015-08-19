@@ -1,0 +1,57 @@
+{
+  "name": "meta-doc",
+  "version": "1.0.0",
+  "description": "Project documentation generator with support of HTML and Markdown pages.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "lint": "./node_modules/.bin/jshint --exclude-path ./.gitignore --reporter=./node_modules/jshint-full-path/index.js .",
+    "pretest": "npm run-script lint",
+    "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --require should --reporter spec --ui bdd ./test",
+    "posttest": "./node_modules/.bin/istanbul check-coverage"
+  },
+  "preferGlobal": "true",
+  "bin": {
+    "meta-doc": "lib/meta-doc.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/metaplatform/meta-doc.git"
+  },
+  "keywords": [
+    "meta-doc",
+    "doc",
+    "documentation",
+    "doc generator",
+    "api doc",
+    "api documentation"
+  ],
+  "author": "META Platform team <www.meta-platform.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/metaplatform/meta-doc/issues"
+  },
+  "homepage": "https://github.com/metaplatform/meta-doc",
+  "devDependencies": {
+    "istanbul": "^0.3.17",
+    "jshint": "^2.8.0",
+    "jshint-full-path": "^1.1.1",
+    "mocha": "^2.2.5",
+    "should": "^6.0.3"
+  },
+  "dependencies": {
+    "argparse": "^1.0.2",
+    "cp": "^0.2.0",
+    "express": "^4.13.3",
+    "jade": "^1.11.0",
+    "markdown-it": "^4.4.0",
+    "markdown-it-attrs": "0.0.3",
+    "markdown-it-container": "^1.0.0",
+    "markdown-it-highlightjs": "^2.0.0",
+    "meta-logger": "^1.0.1",
+    "mkdir-p": "0.0.6",
+    "node-watch": "^0.3.4"
+  }
+}
