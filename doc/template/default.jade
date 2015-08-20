@@ -1,0 +1,33 @@
+doctype html
+html(lang="en")
+  head
+    include ./head.jade
+
+  body
+
+    include ./header.jade
+
+    div#main
+
+      include ./toc.jade
+
+      if sidecode
+        div#sidecode
+
+      div#contents(class={ "with-sidecode": sidecode === true })
+        each section, id in sections
+          if section.type == "page"
+            if !section.hidden
+              a(href="{{base}}#{section.id}", class={ "page-link": true, "with-excerpt": section.excerpt })
+                div.section.page
+                  div.anchor(id=section.anchor)
+                  i(class=[ "mdi", ( section.icon ? "mdi-" + section.icon : "mdi-book-open" ), "icon" ])
+                  h2=section.label
+                  if section.excerpt
+                    !=section.excerpt
+
+          else
+            div.section
+              div.anchor(id=section.anchor)
+              !=section.html
+              .clear

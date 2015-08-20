@@ -24,25 +24,27 @@ var MetaDoc = function(options){
 
 	if(!options) options = {};
 
-	this.dirAssets = options.assets || "./assets";
+	this.dirMedia = options.media || "./media";
 	this.dirPages = options.pages || "./pages";
 	this.dirSite = options.site || "./site";
 	this.dirTemplate = options.template || "./template";
+	this.dirAssets = options.assets || "./template/assets";
 	this.configFile = options.config || "./config.json";
 	this.cacheFile = options.cache || "./cache.json";
 
 	this.config = {};
 
 	//Validate configuration
-	logger.info("Asssets dir:    ", this.dirAssets);
+	logger.info("Media dir:      ", this.dirMedia);
 	logger.info("Pages dir:      ", this.dirPages);
 	logger.info("Site output dir:", this.dirSite);
 	logger.info("Template:       ", this.dirTemplate);
+	logger.info("Asssets dir:    ", this.dirAssets);
 	logger.info("Config:         ", this.configFile);
 
 	//Validate setup
-	if(!fs.existsSync(this.dirAssets))
-		throw new Error("Assets directory not found.");
+	if(!fs.existsSync(this.dirMedia))
+		throw new Error("Media directory not found.");
 
 	if(!fs.existsSync(this.dirPages))
 		throw new Error("Pages directory not found.");
@@ -50,8 +52,11 @@ var MetaDoc = function(options){
 	if(!fs.existsSync(this.dirSite))
 		throw new Error("Site output directory not found.");
 
-	if(!fs.existsSync(this.dirTemplate + "/index.jade"))
-		throw new Error("Template index file not found.");
+	if(!fs.existsSync(this.dirTemplate + "/default.jade"))
+		throw new Error("Default template file not found.");
+
+	if(!fs.existsSync(this.dirAssets))
+		throw new Error("Assets directory not found.");
 
 	if(!fs.existsSync(this.configFile))
 		throw new Error("Config file not found.");
@@ -106,57 +111,128 @@ MetaDoc.prototype.saveCache = function(cache){
 };
 
 /**
- * Copy modified assets to target directory
+ * Copy directory
  *
- * @param string targetDir
+ * @param string srcDir
+ * @param string dstDir
  */
-MetaDoc.prototype.copyAssets = function(targetDir){
+MetaDoc.prototype.copyDir = function(srcDir, dstDir){
 
-	logger.info("Copying assets...");
+	if(!fs.existsSync(dstDir)){
+		logger.debug("Creating directory", dstDir);
+		fs.mkdirSync(dstDir);
+	}
 
-	var copyDir = function(srcDir, dstDir){
+	var files = fs.readdirSync(srcDir);
 
-		if(!fs.existsSync(dstDir)){
-			logger.debug("Creating directory", dstDir);
-			fs.mkdirSync(dstDir);
-		}
+	for(var i in files){
 
-		var files = fs.readdirSync(srcDir);
+		var stats = fs.statSync(srcDir + "/" + files[i]);
 
-		for(var i in files){
+		if(stats.isDirectory()){
 
-			var stats = fs.statSync(srcDir + "/" + files[i]);
+			this.copyDir(srcDir + "/" + files[i], dstDir + "/" + files[i]);
 
-			if(stats.isDirectory()){
+		} else {
 
-				copyDir(srcDir + "/" + files[i], dstDir + "/" + files[i]);
+			if(fs.existsSync(dstDir + "/" + files[i])){
 
-			} else {
+				var dstStats = fs.statSync(dstDir + "/" + files[i]);
 
-				if(fs.existsSync(dstDir + "/" + files[i])){
-
-					var dstStats = fs.statSync(dstDir + "/" + files[i]);
-
-					if(dstStats.mtime.getTime() >= stats.mtime.getTime())
-						continue;
-
-				}
-
-				logger.debug("Copying '%s' to '%s' ...", srcDir + "/" + files[i], dstDir + "/" + files[i]);
-				cp.sync(srcDir + "/" + files[i], dstDir + "/" + files[i]);
+				if(dstStats.mtime.getTime() >= stats.mtime.getTime())
+					continue;
 
 			}
 
+			logger.debug("Copying '%s' to '%s' ...", srcDir + "/" + files[i], dstDir + "/" + files[i]);
+			cp.sync(srcDir + "/" + files[i], dstDir + "/" + files[i]);
+
 		}
 
-	};
+	}
+
+};
+
+/**
+ * Clean directory and optionaly remove itself
+ *
+ * @param string dir
+ * @param bool removeDir
+ */
+MetaDoc.prototype.cleanDir = function(dir, removeDir){
+
+	if(!fs.existsSync(dir))
+		return false;
+
+	var files = fs.readdirSync(dir);
+
+	for(var i in files){
+
+		var stats = fs.statSync(dir + "/" + files[i]);
+
+		if(stats.isDirectory()){
+
+			this.cleanDir(dir + "/" + files[i], true);
+
+		} else {
+
+			logger.debug("Removing file '%s' ...", dir + "/" + files[i]);
+			fs.unlinkSync(dir + "/" + files[i]);
+
+		}
+
+	}
+
+	if(removeDir){
+		logger.debug("Removing directory '%s' ...", dir);
+		fs.rmdirSync(dir);
+	}
+
+};
+
+/**
+ * Copy modified media to target directory
+ */
+MetaDoc.prototype.copyMedia = function(){
+
+	logger.info("Copying media...");
 
 	try {
-		copyDir(this.dirAssets, this.dirSite + "/assets");
+		this.copyDir(this.dirMedia, this.dirSite + "/media");
 	} catch(e) {
 		this.emit("error", e);
 	}
  
+	return this;
+
+};
+
+/**
+ * Copy modified assets to target directory
+ */
+MetaDoc.prototype.copyAssets = function(){
+
+	logger.info("Copying assets...");
+
+	try {
+		this.copyDir(this.dirAssets, this.dirSite + "/assets");
+	} catch(e) {
+		this.emit("error", e);
+	}
+ 
+	return this;
+
+};
+
+/**
+ * Remove all files from site directory
+ */
+MetaDoc.prototype.cleanSite = function(){
+
+	logger.info("Cleaning site directory...");
+
+	this.cleanDir(this.dirSite);
+
 	return this;
 
 };
@@ -170,6 +246,19 @@ MetaDoc.prototype.copyAssets = function(targetDir){
 MetaDoc.prototype.shortcode = function(name, cb){
 
 	Compiler.shortcodes[name] = cb;
+
+	return this;
+
+};
+
+/**
+ * Registers compiler helper
+ *
+ * @param Array args
+ */
+MetaDoc.prototype.helper = function(args){
+
+	Compiler.helpers.push(args);
 
 	return this;
 
@@ -206,6 +295,7 @@ MetaDoc.prototype.compile = function(useCache){
 
 		//Setup compiler
 		var compiler = new Compiler({
+			mediaPath: "media",
 			assetsPath: "assets",
 			outputDir: this.dirSite,
 			templateDir: this.dirTemplate,
@@ -247,6 +337,13 @@ MetaDoc.prototype.watch = function(){
 
 	});
 
+	watch(this.dirAssets, function(filename){
+
+		logger.info("File '%s' has changed, copying assets...", filename);
+		self.copyAssets();
+
+	});
+
 	watch(this.dirTemplate, function(filename){
 
 		logger.info("Template '%s' has changed, recompiling all...", filename);
@@ -262,10 +359,10 @@ MetaDoc.prototype.watch = function(){
 
 	});
 
-	watch(this.dirAssets, function(filename){
+	watch(this.dirMedia, function(filename){
 
-		logger.info("File '%s' has changed, copying assets...", filename);
-		self.copyAssets();
+		logger.info("File '%s' has changed, copying media...", filename);
+		self.copyMedia();
 
 	});
 

@@ -1,0 +1,16 @@
+mixin navTree( parent )
+  ul(class={ "current": parent.id === page.id })
+    each item in parent.sections
+      if !item.hidden
+        if item.type == "page"
+          li.page(class={ "current-parent": page.id.substr(0, item.id.length) === item.id }, data-anchor=item.anchor)
+            a(href="{{base}}#{item.id}")
+              i(class=[ "mdi", ( item.icon ? "mdi-" + item.icon : "mdi-book-open" ), "icon" ])
+              =item.label
+            +navTree( item )
+        else
+          li.section(data-anchor=item.anchor): a(href="{{base}}#{parent.id}##{item.anchor}")=item.label
+
+nav#toc
+  button#toc-toggle: i.mdi.mdi-format-list-bulleted
+  +navTree(nav)

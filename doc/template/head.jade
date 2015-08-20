@@ -1,0 +1,14 @@
+title=config.title
+link(rel="stylesheet", type="text/css", href="http://fonts.googleapis.com/css?family=Open+Sans:400,700&subset=latin,latin-ext")
+link(rel="stylesheet", type="text/css", href="http://fonts.googleapis.com/css?family=Roboto:300,400,100,700&subset=latin,latin-ext")
+link(rel="stylesheet", type="text/css", href="{{assets}}/mdi/css/materialdesignicons.min.css")
+link(rel="stylesheet", type="text/css", href="{{assets}}/highlightjs/styles/monokai_sublime.css")
+link(rel="stylesheet", href="{{assets}}/main.css")
+script(type="text/javascript", src="{{assets}}/live.js")
+script(type="text/javascript", src="{{assets}}/main.js")
+meta(name="viewport", content="width=device-width")
+meta(name="generator", content="META Doc / https://github.com/metaplatform/meta-doc")
+
+if config.meta
+    each content, name in config.meta
+      meta(name=name, content=content)
