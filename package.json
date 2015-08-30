@@ -9,7 +9,7 @@
   "scripts": {
     "lint": "./node_modules/.bin/jshint --exclude-path ./.gitignore --reporter=./node_modules/jshint-full-path/index.js .",
     "pretest": "npm run-script lint",
-    "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --require should --reporter spec --ui bdd ./test",
+    "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --require should --reporter spec --ui bdd ./test/*",
     "posttest": "./node_modules/.bin/istanbul check-coverage"
   },
   "preferGlobal": "true",
@@ -29,17 +29,21 @@
     "api documentation"
   ],
   "author": "META Platform team <www.meta-platform.com>",
-  "license": "MIT",
+  "license": "Apache License",
   "bugs": {
     "url": "https://github.com/metaplatform/meta-doc/issues"
   },
   "homepage": "https://github.com/metaplatform/meta-doc",
   "devDependencies": {
+    "cheerio": "^0.19.0",
     "istanbul": "^0.3.17",
     "jshint": "^2.8.0",
     "jshint-full-path": "^1.1.1",
     "mocha": "^2.2.5",
-    "should": "^6.0.3"
+    "mock-fs": "^3.1.0",
+    "rmdir-recursive": "0.0.1",
+    "should": "^6.0.3",
+    "supertest": "^1.0.1"
   },
   "dependencies": {
     "argparse": "^1.0.2",
@@ -51,6 +55,7 @@
     "markdown-it-container": "^1.0.0",
     "markdown-it-highlightjs": "^2.0.0",
     "meta-logger": "^1.0.1",
+    "meta-shortcodes": "^1.0.1",
     "mkdir-p": "0.0.6",
     "node-watch": "^0.3.4"
   }

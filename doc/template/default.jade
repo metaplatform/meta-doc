@@ -3,7 +3,7 @@ html(lang="en")
   head
     include ./head.jade
 
-  body
+  body#top
 
     include ./header.jade
 
@@ -14,20 +14,42 @@ html(lang="en")
       if sidecode
         div#sidecode
 
-      div#contents(class={ "with-sidecode": sidecode === true })
+      article#page(class={ "with-sidecode": sidecode === true })
+        if page.excerptHtml && !config.excerpt_hidden
+          header.excerpt
+            i(class=[ "mdi", ( page.icon ? "mdi-" + page.icon : "mdi-book-open" ), "icon" ])
+            div.content!=page.excerptHtml
+            .clear
+
+        - var directoryOpened = false;
+
         each section, id in sections
           if section.type == "page"
             if !section.hidden
-              a(href="{{base}}#{section.id}", class={ "page-link": true, "with-excerpt": section.excerpt })
-                div.section.page
-                  div.anchor(id=section.anchor)
+              if !directoryOpened
+                !='<section class="directory">'
+                - directoryOpened = true
+
+              div.item
+                a(href="{{base}}#{section.id}", class={ "page-link": true, "with-excerpt": section.excerpt })
                   i(class=[ "mdi", ( section.icon ? "mdi-" + section.icon : "mdi-book-open" ), "icon" ])
-                  h2=section.label
-                  if section.excerpt
-                    !=section.excerpt
+                  =section.label
 
           else
-            div.section
+            if directoryOpened
+              !='<div class="clear"></div></section>'
+              - directoryOpened = false
+
+            section.section
               div.anchor(id=section.anchor)
-              !=section.html
-              .clear
+              div.content
+                !=section.html
+                .clear
+
+        if directoryOpened
+          !='<div class="clear"></div></section>'
+          - directoryOpened = false
+
+        include ./footer-section.jade
+
+    include ./lightbox.jade

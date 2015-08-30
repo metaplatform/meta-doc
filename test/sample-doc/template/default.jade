@@ -1,0 +1,27 @@
+doctype html
+html(lang="en")
+  head
+  body
+    div#nav=nav.name
+    div#config-global=config.global
+    div#config-local=config.local
+    div#page-name=page.name
+    div#page-sidecode=sidecode
+    if page.excerptHtml
+      div#page-excerpt=page.excerptHtml
+    div#sections
+      each section, id in sections
+        div.section(id=section.anchor)
+          p.label=section.label
+          if section.excerpt
+            div.excerpt!=section.excerptHtml
+
+    div#base-path-a {{base}}
+    div#base-path-b $base$
+
+    div#assets-path-a {{assets}}
+    div#assets-path-b $assets$
+
+    div#media-path-a {{media}}
+    div#media-path-b $media$
+    div#shortcode [shortcode X y="Y"]TRUE[/shortcode]

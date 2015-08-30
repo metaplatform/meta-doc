@@ -1,0 +1,16 @@
+{
+	"title": "META Platform Codebase",
+	"meta": {
+		"description": "Project documentation generator with support of HTML and Markdown pages.",
+		"keywords": "documentation generator doc api meta readme",
+		"author": "META Platform"
+	},
+	"header_title": "<strong>META</strong>Platform <span>Codebase</span>",
+	"header_image": "$media$/header.jpg",
+	"header_image_position": "top",
+	"github": "https://github.com/metaplatform",
+	"menu": {
+		"http://www.meta-platform.com/": "Project homepage",
+		"http://www.meta-platform.com/contact/": "Support"
+	}
+}

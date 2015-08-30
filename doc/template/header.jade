@@ -1,4 +1,4 @@
-header#header
+header#header(style=( config.header_image ? "background-image: url('" + config.header_image + "');" : "" ) + ( config.header_image_position ? "background-position: " + config.header_image_position + ";" : "" ))
   if config.github || config.menu
     button#menu-open: i.mdi.mdi-menu
 

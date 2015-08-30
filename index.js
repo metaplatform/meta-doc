@@ -3,7 +3,7 @@
  * Documentation generator
  *
  * @author META Platform <www.meta-platform.com>
- * @license MIT
+ * @license See LICENSE file distributed with this source code
  */
 
 //Dependencies
@@ -245,7 +245,7 @@ MetaDoc.prototype.cleanSite = function(){
  */
 MetaDoc.prototype.shortcode = function(name, cb){
 
-	Compiler.shortcodes[name] = cb;
+	Compiler.shortcodes.add(name, cb);
 
 	return this;
 
