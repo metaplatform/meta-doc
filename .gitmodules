@@ -1,3 +1,3 @@
-[submodule "doc/template/assets/mdi"]
-	path = doc/template/assets/mdi
+[submodule "template/assets/mdi"]
+	path = template/assets/mdi
 	url = https://github.com/Templarian/MaterialDesign-Webfont.git

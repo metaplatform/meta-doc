@@ -1,6 +1,0 @@
-{
-	"template": "redirect",
-	"location": "{{base}}",
-	"slug": "meta-js",
-	"hidden": true
-}

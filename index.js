@@ -8,7 +8,6 @@
 
 //Dependencies
 var fs = require("fs");
-var cp = require("cp");
 var watch = require('node-watch');
 var logger = require("meta-logger");
 
@@ -16,6 +15,8 @@ var EventEmitter = require('events').EventEmitter;
 
 var TreeParser = require("./lib/treeParser.js");
 var Compiler = require("./lib/compiler.js");
+var Rewrite = require("./lib/rewrite.js");
+var Utils = require("./lib/utils.js");
 
 /**
  * Constructor
@@ -33,6 +34,7 @@ var MetaDoc = function(options){
 	this.cacheFile = options.cache || "./cache.json";
 
 	this.config = {};
+	this.compilers = [];
 
 	//Validate configuration
 	logger.info("Media dir:      ", this.dirMedia);
@@ -60,6 +62,10 @@ var MetaDoc = function(options){
 
 	if(!fs.existsSync(this.configFile))
 		throw new Error("Config file not found.");
+
+	//Register default compiler
+	this.useCompiler(Compiler);
+	this.useCompiler(Rewrite);
 
 	//Copy assets
 	this.loadConfig();
@@ -111,86 +117,6 @@ MetaDoc.prototype.saveCache = function(cache){
 };
 
 /**
- * Copy directory
- *
- * @param string srcDir
- * @param string dstDir
- */
-MetaDoc.prototype.copyDir = function(srcDir, dstDir){
-
-	if(!fs.existsSync(dstDir)){
-		logger.debug("Creating directory", dstDir);
-		fs.mkdirSync(dstDir);
-	}
-
-	var files = fs.readdirSync(srcDir);
-
-	for(var i in files){
-
-		var stats = fs.statSync(srcDir + "/" + files[i]);
-
-		if(stats.isDirectory()){
-
-			this.copyDir(srcDir + "/" + files[i], dstDir + "/" + files[i]);
-
-		} else {
-
-			if(fs.existsSync(dstDir + "/" + files[i])){
-
-				var dstStats = fs.statSync(dstDir + "/" + files[i]);
-
-				if(dstStats.mtime.getTime() >= stats.mtime.getTime())
-					continue;
-
-			}
-
-			logger.debug("Copying '%s' to '%s' ...", srcDir + "/" + files[i], dstDir + "/" + files[i]);
-			cp.sync(srcDir + "/" + files[i], dstDir + "/" + files[i]);
-
-		}
-
-	}
-
-};
-
-/**
- * Clean directory and optionaly remove itself
- *
- * @param string dir
- * @param bool removeDir
- */
-MetaDoc.prototype.cleanDir = function(dir, removeDir){
-
-	if(!fs.existsSync(dir))
-		return false;
-
-	var files = fs.readdirSync(dir);
-
-	for(var i in files){
-
-		var stats = fs.statSync(dir + "/" + files[i]);
-
-		if(stats.isDirectory()){
-
-			this.cleanDir(dir + "/" + files[i], true);
-
-		} else {
-
-			logger.debug("Removing file '%s' ...", dir + "/" + files[i]);
-			fs.unlinkSync(dir + "/" + files[i]);
-
-		}
-
-	}
-
-	if(removeDir){
-		logger.debug("Removing directory '%s' ...", dir);
-		fs.rmdirSync(dir);
-	}
-
-};
-
-/**
  * Copy modified media to target directory
  */
 MetaDoc.prototype.copyMedia = function(){
@@ -198,7 +124,7 @@ MetaDoc.prototype.copyMedia = function(){
 	logger.info("Copying media...");
 
 	try {
-		this.copyDir(this.dirMedia, this.dirSite + "/media");
+		Utils.copyDir(this.dirMedia, this.dirSite + "/media");
 	} catch(e) {
 		this.emit("error", e);
 	}
@@ -215,7 +141,7 @@ MetaDoc.prototype.copyAssets = function(){
 	logger.info("Copying assets...");
 
 	try {
-		this.copyDir(this.dirAssets, this.dirSite + "/assets");
+		Utils.copyDir(this.dirAssets, this.dirSite + "/assets");
 	} catch(e) {
 		this.emit("error", e);
 	}
@@ -231,19 +157,19 @@ MetaDoc.prototype.cleanSite = function(){
 
 	logger.info("Cleaning site directory...");
 
-	this.cleanDir(this.dirSite);
+	Utils.cleanDir(this.dirSite);
 
 	return this;
 
 };
 
 /**
- * Registers compiler shortcode
+ * Registers default compiler shortcode
  *
  * @param string name
  * @param Function cb
  */
-MetaDoc.prototype.shortcode = function(name, cb){
+MetaDoc.prototype.addShortcode = function(name, cb){
 
 	Compiler.shortcodes.add(name, cb);
 
@@ -252,15 +178,52 @@ MetaDoc.prototype.shortcode = function(name, cb){
 };
 
 /**
- * Registers compiler helper
+ * Registers default compiler helper
  *
  * @param Array args
  */
-MetaDoc.prototype.helper = function(args){
+MetaDoc.prototype.addHelper = function(args){
 
 	Compiler.helpers.push(args);
 
 	return this;
+
+};
+
+/**
+ * Registers another compiler
+ *
+ * @param Array args
+ */
+MetaDoc.prototype.useCompiler = function(compiler){
+
+	this.compilers.push(compiler);
+
+};
+
+/**
+ * Registers built-in shortcodes
+ */
+MetaDoc.prototype.useDefaultShortcodes = function(){
+
+	var Shortcodes = require("./lib/shortcodes.js");
+
+	//Use base shortcodes
+	for(var s in Shortcodes)
+		this.addShortcode(s, Shortcodes[s]);
+
+};
+
+/**
+ * Registers built-in helpers
+ */
+MetaDoc.prototype.useDefaultHelpers = function(){
+
+	var Helpers = require("./lib/helpers.js");
+
+	//Use base helpers
+	for(var h in Helpers)
+		this.addHelper(Helpers[h]);
 
 };
 
@@ -289,23 +252,27 @@ MetaDoc.prototype.compile = function(useCache){
 		var tree = new TreeParser(self.dirPages);
 
 		//Check cache
-		var compileList = tree.getChangedPages( useCache ? self.getCache() : null );
+		var changes = tree.getChanges( useCache ? self.getCache() : null );
 
-		logger.info("Pages to be compiled:", countProperties(compileList));
+		logger.info("Pages to be compiled:", countProperties(changes.pages));
 
-		//Setup compiler
-		var compiler = new Compiler({
+		var compilerOpts = {
 			mediaPath: "media",
 			assetsPath: "assets",
+			pagesDir: this.dirPages,
 			outputDir: this.dirSite,
 			templateDir: this.dirTemplate,
 			templateIndex: "index.jade"
-		}, tree.root, this.config);
+		};
 
-		//Compile changed files
-		for(var i in compileList){
-			logger.info("Compiling '%s'...", i);
-			compiler.compile(compileList[i]);
+		//Setup compiler
+		for(var c in this.compilers){
+
+			var compilerConstructor = this.compilers[c];
+
+			var compiler = new compilerConstructor(compilerOpts, tree.root, this.config);
+			compiler.compile(changes);
+
 		}
 
 		//Save cache

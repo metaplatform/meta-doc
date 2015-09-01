@@ -75,10 +75,10 @@ describe("Compiler", function(){
 				global: "global-value"
 			});
 
-			Compiler.shortcodes.add("shortcode", function(buf, opts){ return buf + ":" + opts.X + ":" + opts.y; });
+			Compiler.shortcodes.add("shortcode", function(opts, content){ return content + ":" + opts[0] + ":" + opts.y; });
 			Compiler.helpers.push([ require('markdown-it-attrs') ]);
 
-			compiler.compile(tree.root);
+			compiler.compile({ pages: [tree.root] });
 
 			if(!fs.existsSync(__dirname + "/../sample-doc/site/index.html"))
 				throw new Error("Page not compiled!");
@@ -138,7 +138,7 @@ describe("Compiler", function(){
 			});
 
 			it("should render shortcodes", function(){
-				dom("#shortcode").text().should.eql("TRUE:true:Y");
+				dom("#shortcode").text().should.eql("TRUE:X:Y");
 			});
 
 			it("should use helpers", function(){
@@ -160,7 +160,7 @@ describe("Compiler", function(){
 				global: "global-value"
 			});
 
-			compiler.compile(tree.root.sections[2]);
+			compiler.compile({ pages: [tree.root.sections[2]] });
 
 			if(!fs.existsSync(__dirname + "/../sample-doc/site/sub-page/index.html"))
 				throw new Error("Page not compiled!");
@@ -225,7 +225,7 @@ describe("Compiler", function(){
 				global: "global-value"
 			});
 
-			compiler.compile(tree.root.sections[3]);
+			compiler.compile({ pages: [tree.root.sections[3]] });
 
 			if(!fs.existsSync(__dirname + "/../sample-doc/site/root-page-2/index.html"))
 				throw new Error("Page not compiled!");

@@ -28,3 +28,12 @@ node_modules
 
 # OS X
 .DS_Store
+
+# Sandbox
+sandbox
+
+# Doc compiled site
+doc/site/*
+skeleton/site/*
+skeleton/config.json
+.cache

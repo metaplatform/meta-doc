@@ -1,14 +1,27 @@
 {
-	"title": "META Platform Codebase",
-	"meta": {
-		"description": "Project documentation generator with support of HTML and Markdown pages.",
-		"keywords": "documentation generator doc api meta readme",
-		"author": "META Platform"
-	},
-	"header_title": "<strong>META</strong>Platform <span>Codebase</span>",
-	"github": "https://github.com/metaplatform",
-	"menu": {
-		"http://www.meta-platform.com/": "Project homepage",
-		"http://www.meta-platform.com/contact/": "Support"
-	}
+  "title": "META Doc",
+  "header_title": "<strong>META</strong> Doc",
+  "meta": {
+    "description": "Project documentation generator with support of HTML and Markdown pages.",
+    "keywords": "meta-doc, doc, documentation, doc generator, api doc, api documentation",
+    "author": "META Platform Team <www.meta-platform.com>"
+  },
+  "header_github": "https://github.com/metaplatform/meta-doc",
+	"menu": [
+	    {
+	        "label": "Support",
+	        "link": "{{base}}/meta/#01_Support"
+	    }
+	],
+	"footer_links": [
+	    {
+	        "label": "Privacy Policy",
+	        "link": "{{base}}/meta/#02_Privacy_policy"
+	    },
+	    {
+	        "label": "Report an issue",
+	        "link": "https://github.com/metaplatform/meta-doc/issues",
+	        "target": "_blank"
+	    }
+	]
 }

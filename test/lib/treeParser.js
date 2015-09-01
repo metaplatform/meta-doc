@@ -496,13 +496,13 @@ describe("Tree parser", function(){
 
 	});
 
-	describe("#getChangedPages", function(){
+	describe("#getChanges", function(){
 
 		it("should not return any changes if cache is same (eg. tree not modified)", function(){
 
 			var cacheData = parser.getCache();
-			var changes = parser.getChangedPages(cacheData);
-			changes.should.be.eql({});
+			var changes = parser.getChanges(cacheData);
+			changes.pages.should.be.eql({});
 
 		});
 
@@ -511,10 +511,10 @@ describe("Tree parser", function(){
 			var cacheData = parser.getCache();
 			cacheData.files['/test-tree/config.json'] = 0;
 
-			var changes = parser.getChangedPages(cacheData);
+			var changes = parser.getChanges(cacheData);
 
 			it("should return root node", function(){
-				changes.should.has.property("/");
+				changes.pages.should.has.property("/");
 			});
 
 		});
@@ -524,10 +524,10 @@ describe("Tree parser", function(){
 			var cacheData = parser.getCache();
 			cacheData.files['/test-tree/_excerpt.md'] = 0;
 
-			var changes = parser.getChangedPages(cacheData);
+			var changes = parser.getChanges(cacheData);
 
 			it("should return root node", function(){
-				changes.should.has.property("/");
+				changes.pages.should.has.property("/");
 			});
 
 		});
@@ -537,10 +537,10 @@ describe("Tree parser", function(){
 			var cacheData = parser.getCache();
 			cacheData.files['/test-tree/001_Root_section.md'] = 0;
 
-			var changes = parser.getChangedPages(cacheData);
+			var changes = parser.getChanges(cacheData);
 
 			it("should return root node", function(){
-				changes.should.has.property("/");
+				changes.pages.should.has.property("/");
 			});
 
 		});
@@ -550,10 +550,10 @@ describe("Tree parser", function(){
 			var cacheData = parser.getCache();
 			cacheData.files['/test-tree/003_Root_page/001_Page_section.md'] = 0;
 
-			var changes = parser.getChangedPages(cacheData);
+			var changes = parser.getChanges(cacheData);
 
 			it("should return level 1 node", function(){
-				changes.should.has.property("/root-page/");
+				changes.pages.should.has.property("/root-page/");
 			});
 
 		});
@@ -563,10 +563,10 @@ describe("Tree parser", function(){
 			var cacheData = parser.getCache();
 			cacheData.files['/test-tree/003_Root_page/002_Page_Subpage/A_Section.md'] = 0;
 
-			var changes = parser.getChangedPages(cacheData);
+			var changes = parser.getChanges(cacheData);
 
 			it("should return level 2 node", function(){
-				changes.should.has.property("/root-page/sub-page/");
+				changes.pages.should.has.property("/root-page/sub-page/");
 			});
 
 		});
@@ -579,12 +579,12 @@ describe("Tree parser", function(){
 			mockFs(fsMockTree);
 
 			var parserB = new TreeParser("/test-tree");
-			var changes = parserB.getChangedPages(cacheData);
+			var changes = parserB.getChanges(cacheData);
 
 			it("should return all nodes", function(){
-				changes.should.has.property("/");
-				changes.should.has.property("/root-page/");
-				changes.should.has.property("/root-page/sub-page/");
+				changes.pages.should.has.property("/");
+				changes.pages.should.has.property("/root-page/");
+				changes.pages.should.has.property("/root-page/sub-page/");
 			});
 
 		});

@@ -10,7 +10,8 @@
     "lint": "./node_modules/.bin/jshint --exclude-path ./.gitignore --reporter=./node_modules/jshint-full-path/index.js .",
     "pretest": "npm run-script lint",
     "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --require should --reporter spec --ui bdd ./test/*",
-    "posttest": "./node_modules/.bin/istanbul check-coverage"
+    "posttest": "./node_modules/.bin/istanbul check-coverage",
+    "doc": "./lib/meta-doc.js -s -w ./doc"
   },
   "preferGlobal": "true",
   "bin": {
@@ -55,8 +56,9 @@
     "markdown-it-container": "^1.0.0",
     "markdown-it-highlightjs": "^2.0.0",
     "meta-logger": "^1.0.1",
-    "meta-shortcodes": "^1.0.1",
+    "meta-shortcodes": "^1.0.3",
     "mkdir-p": "0.0.6",
-    "node-watch": "^0.3.4"
+    "node-watch": "^0.3.4",
+    "readline-sync": "^1.2.21"
   }
 }
