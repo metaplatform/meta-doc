@@ -97,7 +97,7 @@ a:hover {
 #header #logo span {
 	display: inline-block;
 	/*color: rgba(255, 255, 255, 0.7);*/
-	border-left: 1px solid rgba(255, 255, 255, 1.0);
+	border-left: 1px solid rgba(255, 255, 255, 0.7);
 	padding-left: .4em;
 	margin-left: .3em;
 }
@@ -292,7 +292,7 @@ nav#toc .wrap #toc-toggle:hover {
 }
 
 nav#toc .wrap ul {
-	padding-left: 15px;
+	padding-left: 10px;
 	margin-bottom: 10px;
 	list-style: none;
 }
