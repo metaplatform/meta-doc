@@ -18,4 +18,4 @@ To display excerpt you have to create file `_excerpt.md` or `_excerpt.html` in a
 
 Excerpt icon can be specified using [page config](#04_Pages). If not specified then default icon is used.
 
-[![Page excerpt screenshot]($media$/screenshot-excerpt.png)]($media$/screenshot-excerpt.png){.shadow}
+[![Page excerpt screenshot]($media$/meta-doc/screenshot-excerpt.png)]($media$/screenshot-excerpt.png){.shadow}
