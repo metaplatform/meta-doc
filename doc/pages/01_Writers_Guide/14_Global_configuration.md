@@ -13,9 +13,9 @@ Default template uses following properties.
 ```json
 {
 	"title": "META Doc",
+	"description": "Project documentation generator with support of HTML and Markdown pages.",
+	"keywords": "documentation generator doc api meta readme",
 	"meta": {
-		"description": "Project documentation generator with support of HTML and Markdown pages.",
-		"keywords": "documentation generator doc api meta readme",
 		"author": "META Platform team"
 	},
 	"header_title": "<strong>META</strong>Platform <span>Codebase</span>",
@@ -69,8 +69,10 @@ Default template uses following properties.
 
 | Property name | Type | Description |
 | ------------- | ---- | ----------- |
-| title\** | string | Page title - HTML <title> tag. |
-| meta\*  | object | HTML meta tags in form of key-value. |
+| title\* | string | Global page title - HTML <title> tag. |
+| description\* | string | HTML meta description tag contents. |
+| keywords\* | string | HTML meta keywords tag contents. |
+| meta | object | HTML meta tags in form of key-value. |
 | header_title\** | string | Specifies title in header toolbar. |
 | header_image | string | Overrides default header toolbar background image URL. |
 | header_image_position | string | Overrides default header toolbar background image alignment. It is CSS value. |
@@ -85,7 +87,6 @@ Default template uses following properties.
 | rewrite | object | Rewrite rules which are compiled into `.htaccess` and `rewrite.json` files. See [Redirects section](#16_Redirects) for more information. |
 
 **\* recommended**  
-**\*\* mandatory**
 
 ### Menu items format
 

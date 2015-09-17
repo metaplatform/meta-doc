@@ -1,4 +1,12 @@
-title=config.title
+if page.parent === null
+	title #{(config.title ? config.title : "META Doc")}
+else
+	- var titleList = [];
+	- var titlePage = page;
+	- while(titlePage.parent){ titleList.push( titlePage.title ); titlePage = titlePage.parent; }
+
+	title #{titleList.join(" / ")} - #{(config.title ? config.title : "META Doc")}
+
 //Base CSS
 link(rel="stylesheet", type="text/css", href="http://fonts.googleapis.com/css?family=Open+Sans:400,700&subset=latin,latin-ext")
 link(rel="stylesheet", type="text/css", href="http://fonts.googleapis.com/css?family=Roboto:300,400,100,700&subset=latin,latin-ext")
@@ -25,6 +33,12 @@ if config.custom_js
 //META
 meta(name="viewport", content="width=device-width")
 meta(name="generator", content="META Doc / https://github.com/metaplatform/meta-doc")
+
+if config.description
+	meta(name="description", content=config.description)
+
+if config.keywords
+	meta(name="keywords", content=config.keywords)
 
 if config.meta
 	each content, name in config.meta

@@ -18,7 +18,8 @@ Following configuration properties are available for this default template:
 	"icon": "school",
 	"slug": "getting-started",
 	"hidden": false,
-	"template": "my-template"
+	"template": "my-template",
+	"page_title": "Getting Started page"
 }
 ```
 :::
@@ -29,3 +30,8 @@ Following configuration properties are available for this default template:
 | slug | Specifies custom URL slug for page that will be used instead of generated one. |
 | hidden | Boolean value. If true page is then excluded from navigation tree but can be accessed directly by URL. |
 | template | Specifies alternative template name - without `.jade` file extension. |
+| page_title | Overrides page title which is set to page label by default. |
+
+::: info
+Page configuration properties also overrides default configuration. So you can set for example different description or keywords for each page.
+:::

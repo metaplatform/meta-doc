@@ -115,7 +115,7 @@ describe("Tree parser", function(){
 
 	describe("#parse", function(){
 
-		context("node with invalid confix", function(){
+		context("node with invalid config", function(){
 
 			var node = parser.root.sections[3];
 
