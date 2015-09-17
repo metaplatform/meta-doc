@@ -18,4 +18,4 @@ Page directory is automatically generated overview of child pages with icons and
 
 For the best results group subpages together.
 
-[![Page directory screenshot]($media$/meta-doc/screenshot-directory.png)]($media$/screenshot-directory.png){.shadow}
+[![Page directory screenshot]($media$/meta-doc/screenshot-directory.png)]($media$/meta-doc/screenshot-directory.png){.shadow}

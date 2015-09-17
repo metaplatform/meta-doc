@@ -54,7 +54,13 @@ Default template uses following properties.
 			"link": "https://www.facebook.com/",
 			"target": "_blank"
 		}
-	]
+	],
+	"base_path": "my-project/my-doc",
+	"rewrite_base": "/my-project/my-doc",
+	"rewrite": {
+    	"^beginners-guide/$": "writers-guide/",
+    	"^contact/$": "support/#contact"
+	}
 }
 ```
 :::
@@ -74,6 +80,7 @@ Default template uses following properties.
 | footer_links | array | Specifies footer menu items - see below. |
 | footer_text | string | Specifies footer text area contents. |
 | google_analytics | string | Specifies Google Analytics tracking code. If set then tracking script will be automaticaly printed on each page. |
+| base_path | string | Base path for links without leading dash - absolute URL path to documentation, required when using 404 page. |
 | rewrite_base | string | Base path for mod_rewrite. This value is compiled into `.htaccess` file. |
 | rewrite | object | Rewrite rules which are compiled into `.htaccess` and `rewrite.json` files. See [Redirects section](#16_Redirects) for more information. |
 
