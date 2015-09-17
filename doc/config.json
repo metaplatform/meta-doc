@@ -1,9 +1,9 @@
 {
   "title": "META Doc",
   "header_title": "<strong>META</strong> Doc",
+  "description": "Project documentation generator with support of HTML and Markdown pages.",
+  "keywords": "meta-doc, doc, documentation, doc generator, api doc, api documentation",
   "meta": {
-    "description": "Project documentation generator with support of HTML and Markdown pages.",
-    "keywords": "meta-doc, doc, documentation, doc generator, api doc, api documentation",
     "author": "META Platform Team <www.meta-platform.com>"
   },
   "header_github": "https://github.com/metaplatform/meta-doc",
