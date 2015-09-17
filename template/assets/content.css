@@ -368,6 +368,11 @@
 	background: #3F51B5;
 }
 
+.content .tag.attr:before {
+	content: 'ATTR';
+	background: #F9A825;
+}
+
 .content .tag.func:before {
 	content: 'FUNC';
 	background: #8E24AA;

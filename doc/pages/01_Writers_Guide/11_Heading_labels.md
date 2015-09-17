@@ -149,6 +149,23 @@ This block demonstrates usage of LIVE label. Main purpose of this label is to do
 :::clear :::
 
 :::sidecode-h3
+## Label of ATTRIBUTE {.tag .attr}
+
+```markdown
+### type {.tag .attr}
+This block demonstrates usage of ATTR label.
+Main purpose of this label is to document various attributes.
+```
+:::
+
+### type {.tag .attr}
+
+This block demonstrates usage of ATTR label.
+Main purpose of this label is to document various attributes.
+
+:::clear :::
+
+:::sidecode-h3
 ## Label of EVENT {.tag .event}
 
 ```markdown
