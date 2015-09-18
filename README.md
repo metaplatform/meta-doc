@@ -1,6 +1,8 @@
 # meta-doc
 META Doc is modern tool for generating rich project documentations using Markdown or HTML with support of various visual styles and custom templates.
 
+See official [META Doc documentation](http://code.meta-platform.com/libraries/meta-doc/) for more info and user guide.
+
 ## Getting started
 
 Install via NPM:
@@ -39,10 +41,6 @@ To open documentation clone repository then run following command and open [http
 npm install
 npm run doc
 ```
-
-**Sorry for short description.**
-
-Official online documentation coming soon with brand new META Platform Codebase brought to you by META Doc itself.
 
 ## Testing
 ```

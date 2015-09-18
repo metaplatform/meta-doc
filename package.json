@@ -1,6 +1,6 @@
 {
   "name": "meta-doc",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Project documentation generator with support of HTML and Markdown pages.",
   "main": "index.js",
   "directories": {
