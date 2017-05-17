@@ -52,7 +52,3 @@ Rules are written as an object where key is pattern and value is new URL.
 ::: warning
 Due to compatibility with .htaccess **old and new urls should NOT be starting with slash**.
 :::
-
-### Where to go next?
-
-[[cta href=../usage/ ]][[icon console /]] Usage[[/cta]] [[cta href=../api-reference/ ]][[icon code-tags /]] API Reference[[/cta]]

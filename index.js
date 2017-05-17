@@ -16,7 +16,11 @@ var EventEmitter = require('events').EventEmitter;
 var TreeParser = require("./lib/treeParser.js");
 var Compiler = require("./lib/compiler.js");
 var Rewrite = require("./lib/rewrite.js");
+var Sitemap = require("./lib/sitemap.js");
 var Utils = require("./lib/utils.js");
+
+var Shortcodes = require("./lib/shortcodes.js");
+var Helpers = require("./lib/helpers.js");
 
 /**
  * Constructor
@@ -66,6 +70,7 @@ var MetaDoc = function(options){
 	//Register default compiler
 	this.useCompiler(Compiler);
 	this.useCompiler(Rewrite);
+	this.useCompiler(Sitemap);
 
 	//Copy assets
 	this.loadConfig();
@@ -206,8 +211,6 @@ MetaDoc.prototype.useCompiler = function(compiler){
  */
 MetaDoc.prototype.useDefaultShortcodes = function(){
 
-	var Shortcodes = require("./lib/shortcodes.js");
-
 	//Use base shortcodes
 	for(var s in Shortcodes)
 		this.addShortcode(s, Shortcodes[s]);
@@ -219,11 +222,24 @@ MetaDoc.prototype.useDefaultShortcodes = function(){
  */
 MetaDoc.prototype.useDefaultHelpers = function(){
 
-	var Helpers = require("./lib/helpers.js");
-
 	//Use base helpers
 	for(var h in Helpers)
-		this.addHelper(Helpers[h]);
+		if(h.substr(0, 1) != "_")
+			this.addHelper(Helpers[h]);
+
+};
+
+/**
+ * Registers custom helpers
+ */
+MetaDoc.prototype.useCustomHelpers = function(){
+
+	if(this.config.custom_blocks){
+
+		for(var i in this.config.custom_blocks)
+			this.addHelper( Helpers._block.call(null, this.config.custom_blocks[i]) );
+
+	}
 
 };
 

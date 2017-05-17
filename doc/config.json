@@ -7,21 +7,26 @@
     "author": "META Platform Team <www.meta-platform.com>"
   },
   "header_github": "https://github.com/metaplatform/meta-doc",
-	"menu": [
-	    {
-	        "label": "Support",
-	        "link": "{{base}}/meta/#01_Support"
-	    }
-	],
-	"footer_links": [
-	    {
-	        "label": "Privacy Policy",
-	        "link": "{{base}}/meta/#02_Privacy_policy"
-	    },
-	    {
-	        "label": "Report an issue",
-	        "link": "https://github.com/metaplatform/meta-doc/issues",
-	        "target": "_blank"
-	    }
-	]
+  "menu": [
+    {
+        "label": "Support",
+        "link": "{{base}}/meta/#01_Support"
+    }
+  ],
+  "footer_links": [
+    {
+        "label": "Privacy Policy",
+        "link": "{{base}}/meta/#02_Privacy_policy"
+    },
+    {
+        "label": "Report an issue",
+        "link": "https://github.com/metaplatform/meta-doc/issues",
+        "target": "_blank"
+    }
+  ],
+  "custom_blocks": [ "test" ],
+  "sitemap": {
+    "base_url": "http://code.meta-platform.com",
+    "exclude": ["/404/"]
+  }
 }

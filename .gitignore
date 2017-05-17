@@ -36,4 +36,5 @@ sandbox
 doc/site/*
 skeleton/site/*
 skeleton/config.json
+test
 .cache

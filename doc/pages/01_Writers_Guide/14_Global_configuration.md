@@ -85,6 +85,7 @@ Default template uses following properties.
 | base_path | string | Base path for links without leading dash - absolute URL path to documentation, required when using 404 page. |
 | rewrite_base | string | Base path for mod_rewrite. This value is compiled into `.htaccess` file. |
 | rewrite | object | Rewrite rules which are compiled into `.htaccess` and `rewrite.json` files. See [Redirects section](#16_Redirects) for more information. |
+| sitemap | object | Sitemap generator configuration. See [Sitemap section](#17_Sitemap) |
 
 **\* recommended**  
 
