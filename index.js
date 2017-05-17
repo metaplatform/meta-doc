@@ -236,8 +236,22 @@ MetaDoc.prototype.useCustomHelpers = function(){
 
 	if(this.config.custom_blocks){
 
-		for(var i in this.config.custom_blocks)
-			this.addHelper( Helpers._block.call(null, this.config.custom_blocks[i]) );
+		for(var i in this.config.custom_blocks){
+
+			var n = this.config.custom_blocks[i];
+
+			if(n instanceof Object){
+				
+				if(!n.name)
+					throw new Error("Custom block definition #" + i + " must specify 'name' property.");
+
+				this.addHelper( Helpers._block.call(null, n.name, n.prefix || "", n.postfix || "") );
+
+			} else {
+				this.addHelper( Helpers._block.call(null, this.config.custom_blocks[i], "", "") );
+			}
+
+		}
 
 	}
 
